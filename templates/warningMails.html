@@ -1,0 +1,82 @@
+{% extends 'book.html' %}
+{% block book %}
+{% load staticfiles %}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<div class="container-fluid">
+	{% if msg %}
+		<div class="alert alert-{{color}} alert-dismissible col-sm-8">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			<strong>{{msg}} <span class="{{glphy}}"></span></strong>		 
+		</div>
+	{% endif%}
+	<form class="form-horizontal col-sm-6 panel panel-body panel-info" action="{% url 'lbook:warningMails' %}" method="post">
+	{% csrf_token %}
+		<h3 class="text-center text-primary">Send Warning Mails</h3>
+
+	  <div class="form-group">
+	    <label class="control-label col-sm-3">Warning Date :</label>
+	    <div class="col-sm-5">
+	      <input type="text" class="form-control warn"  id="warn" name="warn" placeholder="Enter WarningDate:" required="required">
+	    </div>
+	    <div class="col-sm-3">
+	    	<button type="submit" class="btn btn-info btn-sm">SendMails</button>
+	    	<a href="{% url 'lbook:viewWarningMails' %}" class="btn btn-info btn-xs"><li class="glyphicon glyphicon-eye-open"></li></a>
+	    </div>
+	  </div>
+	</form>
+	<script>
+		jQuery(document).ready(function(){
+				$(function(){
+				    $("#warn").datepicker({
+				      changeMonth: true,
+				      changeYear: true,
+				      "dateFormat":"yy-mm-dd",
+				  });
+			   });
+			});
+	</script>
+</div>
+
+{% if issued %}
+<script src="/static/scripts/jquery.table2excel.min.js"></script>
+	<div class="panel panel-body table-responsive">
+		<table class="table table-bordered table2excel">
+				<tr class="bg-primary">
+					<th colspan="6" align="center" class="text-center">Warning Mail DETAILS <button class="btn btn-info btn-xs pull-right"><img src="{%static 'images/excel.gif'%}" class="pull-right" id="Xcel" class="noExl" ></button></th>
+				</tr>
+				<tr class="bg-primary">
+					<th>Student</th>
+					<th>Book Name</th>
+					<th>Issued Date</th>
+					<th>Mid Date</th>
+					<th>Expired Date</th>
+					<th>Status</th>
+				</tr>
+				{% for issueBook in issued %}
+					<tr>
+						<td>{{issueBook.student}}</td>
+						<td>{{issueBook.book}}</td>
+						<td>{{issueBook.issue_date}}</td>
+						<td>{{issueBook.mailed_Date}}</td>
+						<td>{{issueBook.expired}}</td>
+						{% if issueBook.status == 0 %}<td class="bg-success"><h5 >Returned Book</h5></td>{% elif issueBook.status == 1 %}<td class="bg-danger"><h5>Not Returned Book</h5></td>{% endif %}
+					</tr>
+				{% endfor %}
+		</table>
+		<script>
+			$("#Xcel").click(function(){
+				$(".table2excel").table2excel({
+					exclude: ".noExl",
+					name: "Excel Document Name",
+					filename: "IssuedBookDetails"+ new Date().toISOString().replace(/[\-\:\.]/g, ""),
+					fileext: ".xls",
+					exclude_img: true,
+					exclude_links: true,
+					exclude_inputs: true
+				});
+			});	
+		</script>
+	</div>
+{% endif %}
+{% endblock %}

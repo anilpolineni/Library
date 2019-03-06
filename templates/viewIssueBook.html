@@ -1,0 +1,50 @@
+{% extends 'issuebook.html' %}
+{% block showStudent %}
+{% load staticfiles %}
+<script src="/static/scripts/jQuery2.js"></script>
+<script src="/static/scripts/jquery.table2excel.min.js"></script>
+
+<div class="container-fluid ">
+	<div class="panel panel-body table-responsive">
+		{% if issueBooks %}
+			<table class="table table-bordered table2excel">
+				<tr class="bg-primary">
+					<th colspan="6" align="center">ISSUED BOOKS DETAILS <button class="btn btn-info btn-xs pull-right"><img src="{%static 'images/excel.gif'%}" class="pull-right" id="Xcel" class="noExl" ></button></th>
+				</tr>
+				<tr class="bg-primary">
+					<th>Student</th>
+					<th>Book Name</th>
+					<th>Issued Date</th>
+					<th>Mid Date</th>
+					<th>Expired Date</th>
+					<th>Status</th>
+				</tr>
+				{% for issueBook in issueBooks %}
+					<tr>
+						<td>{{issueBook.student}}</td>
+						<td>{{issueBook.book}}</td>
+						<td>{{issueBook.issue_date}}</td>
+						<td>{{issueBook.mailed_Date}}</td>
+						<td>{{issueBook.expired}}</td>
+						{% if issueBook.status == 0 %}<td class="bg-success"><h5 >Returned Book</h5></td>{% elif issueBook.status == 1 %}<td class="bg-danger"><h5>Not Returned Book</h5></td>{% endif %}
+					</tr>
+				{% endfor %}
+			</table>
+		<script>
+			$("#Xcel").click(function(){
+				$(".table2excel").table2excel({
+					exclude: ".noExl",
+					name: "Excel Document Name",
+					filename: "IssuedBookDetails"+ new Date().toISOString().replace(/[\-\:\.]/g, ""),
+					fileext: ".xls",
+					exclude_img: true,
+					exclude_links: true,
+					exclude_inputs: true
+				});
+			});	
+		</script>
+		{% endif %}		
+	</div>
+
+</div>
+{% endblock %}

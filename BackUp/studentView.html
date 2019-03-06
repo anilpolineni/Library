@@ -1,0 +1,39 @@
+{% extends 'issuebook.html' %}
+{% block showStudent %}
+	{% if issued %}
+	<form action="{% url 'lbook:returnBook' %}" method="post">
+	{% csrf_token %}
+	<div class="table-responsive">
+	<table class="table table-bordered">
+		<tr class="bg-primary">
+			<th> Student Rollno</th>
+			<th>Book Id</th>
+			<th>Issued Date</th>
+			<th>Expired Date</th>
+			<th>Returned/Not</th>
+		</tr>
+
+		{% for issued in issued %}
+			{% if issued.status == 1 %}
+			<tr>
+				<td>{{issued.student}}</td>
+				<td>{{issued.book}}<input type="hidden" name="bookId" value="{{issued.book_id}}"></td>
+				<td>{{issued.issue_date}}</td>
+				<td>{{issued.expired}}</td>				
+				<td><input type="checkbox" name="issue" ></td>
+			</tr>
+			{% elif issued.status == 0 %}
+				<h5 class="text-info">No Data Found</h5>
+			{% endif %}
+		{% endfor %}
+			<tr>
+				<td colspan="5"><input type="submit" value="ReturnBook" class="btn btn-success btn-sm"></td>			
+			</tr>
+		</table>
+		</div>
+		</form>
+	{% endif %}
+	{% if msg %}
+		<h3 class="text-danger">{{msg}}</h3>
+	{% endif %}
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+<script src="/static/scripts/jQuery2.js"></script>
+<script src="/static/scripts/jquery.table2excel.min.js"></script>
+<div class="container-fluid">
+	<div class="panel panel-body panel-info col-sm-5 col-sm-offset-3">
+		<div class="center-block">
+			<h4 class="text-center text-warning">Search Book</h4>
+			<form action="{% url 'lbook:Clientsearches'%}" method="post" >
+			{% csrf_token %}		
+				<div class="col-sm-3">Book Id :</div>
+				<div class="col-sm-6">
+					<input type="text" name="booksearch" class="form-control" placeholder="Search Book By Id" required="required">
+				</div>
+				<div class="col-sm-2">
+					<input type="submit" class="btn btn-info btn-sm">
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="bg-default">
+	{% if books %}
+		<table class="table table-bordered table-hover table2excel">
+			<tr class="bg-primary">
+				<td colspan="8" align="center">Book Details <button class="btn btn-info btn-xs pull-right"><img src="{%static 'images/excel.gif'%}" class="pull-right" id="Xcel" class="noExl" ></button></td>
+			</tr>
+			<tr class="bg-primary">
+				<th>S.No</th>
+				<th>BookId</th>
+				<th>Book Name</th>
+				<th>Author Name</th>
+				<th>Branch</th>
+				<th>Edition</th>
+				<th>Publisher</th>
+				<th>Quantity</th>
+			</tr>
+			{% for book in books %}
+				<tr>
+					<td class="bg-primary">{{forloop.counter}}</td>
+					<td>{{book.bookid}}</td>
+					<td>{{book.name}}</td>
+					<td>{{book.authorname}}</td>
+					<td>{{book.dept}}</td>
+					<td>{{book.edition}}</td>
+					<td>{{book.publisher}}</td>
+					<td>{{book.quantity}}</td>
+				</tr>
+			{% endfor %}
+
+		</table>
+		<script>
+			$("#Xcel").click(function(){
+				$(".table2excel").table2excel({
+					exclude: ".noExl",
+					name: "Excel Document Name",
+					filename: "Book Details"+ new Date().toISOString().replace(/[\-\:\.]/g, ""),
+					fileext: ".xls",
+					exclude_img: true,
+					exclude_links: true,
+					exclude_inputs: true
+				});
+			});	
+		</script>
+	{% elif book %}
+		<table class="table table-bordered ">
+			<tr class="bg-primary">
+				<th>BookId</th>
+				<th>BookName</th>
+				<th>Branch</th>
+				<th>Edition</th>
+				<th>Publisher</th>
+				<th>Quantity</th>
+			</tr>
+			<tr>
+				<td>{{book.bookid}}</td>
+				<td>{{book.name}}</td>
+				<td>{{book.dept}}</td>
+				<td>{{book.edition}}</td>
+				<td>{{book.publisher}}</td>
+				<td>{{book.quantity}}</td>
+			</tr>
+		</table>	
+	{% endif %}
+	</div>
+</div>
+{% endblock %}

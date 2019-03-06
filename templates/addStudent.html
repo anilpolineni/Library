@@ -1,0 +1,78 @@
+{% extends 'book.html' %}
+{% block book %}
+<style>
+	.panel-black{box-shadow: 0px 0px 2px black;}
+</style>
+<div class="container-fluid">
+	{% if msg %}
+		<div class="alert alert-info alert-dismissible col-sm-8">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				<strong>{{msg}}</strong>		 
+		</div>
+	{% endif%}
+	
+	<form class="form-horizontal col-sm-6 panel panel-body panel-black" method="post">
+	{% csrf_token %}
+		<h3 class="text-center text-primary">Add Student</h3>
+	  <div class="form-group">
+	    <label class="control-label col-sm-3">Roll No :</label>
+	    <div class="col-sm-9">
+	      <input type="text" class="form-control"  name="rollno" placeholder="Enter RollNo. :" autofocus="autofocus">
+	    </div>
+	  </div>
+
+	  <div class="form-group">
+	    <label class="control-label col-sm-3">FirstName :</label>
+	    <div class="col-sm-9">
+	      <input type="text" class="form-control"  name="firstname" placeholder="Enter FirstName :">
+	    </div>
+	  </div>
+
+	  <div class="form-group">
+	    <label class="control-label col-sm-3">LastName :</label>
+	    <div class="col-sm-9">
+	      <input type="text" class="form-control"  name="lastname" placeholder="Enter LastName :">
+	    </div>
+	  </div>
+
+	  <div class="form-group">
+	    <label class="control-label col-sm-3">FatherName :</label>
+	    <div class="col-sm-9">
+	      <input type="text" class="form-control"  name="fathername" placeholder="Enter Father Name :">
+	    </div>
+	  </div>
+
+	  <div class="form-group">
+	    <label class="control-label col-sm-3">Gender :</label>
+	    <div class="col-sm-9">
+	    	<select class="form-control" name="gender">
+	    		<option></option>
+	    		<option>Male</option>
+	    		<option>Female</option>
+	    	</select>
+	    </div>
+	  </div>
+
+	  <div class="form-group">
+	    <label class="control-label col-sm-3">Mobile :</label>
+	    <div class="col-sm-9">
+	      <input type="text" class="form-control"  name="mobileno" placeholder="Enter Mobile :">
+	    </div>
+	  </div>
+
+	  <div class="form-group">
+	    <label class="control-label col-sm-3">Email :</label>
+	    <div class="col-sm-9">
+	      <input type="email" class="form-control"  name="emailId" placeholder="Enter Email :">
+	    </div>
+	  </div>
+
+	  <div class="form-group">
+	    <div class="col-sm-12">
+	      <input type="submit" value="Submit" class="btn btn-primary btn-sm pull-right">
+	    </div>
+	  </div>
+
+	</form>
+</div>
+{% endblock %}

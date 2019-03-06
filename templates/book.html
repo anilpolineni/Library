@@ -1,0 +1,78 @@
+{% extends 'librarySystem.html'%}
+{% block libSystem %}
+<style>
+.wow {
+    visibility: hidden;
+}
+</style> 
+{% if user.is_authenticated %}
+<div class="btn-group">
+  <a href="{% url 'lbook:addBook' %}" class="btn btn-primary">Add Book</a>
+  <a href="{% url 'lbook:issueBook'%}" class="btn btn-primary " >Issue Book</a>
+  <a href="{% url 'lbook:bookSearch'%}" class="btn btn-primary">Search Book</a>
+  <a href="{% url 'lbook:addStudent' %}" class="btn btn-primary">Add Student</a>
+  <a href="{% url 'lbook:warningMails' %}" class="btn btn-warning">Warning Mails</a>
+</div>
+{% endif %}
+<div class="">
+	{% block book %}
+  <div class="container-fluid">
+    <h2 class="text-primary">Improve Your Knowledge</h2><hr>
+    <div class="text-justify  animated fadeInDown">
+        <p>It's being aware of something, and having information.</p>
+        <p><strong class="bg-primary">Knowledge</strong> is really about facts and ideas that we acquire through study, research, investigation, observation, or experience.</p>
+        <p><strong class="bg-primary">Wisdom</strong>is the ability to discern and judge which aspects of that knowledge are true, right, lasting, and applicable to your life.</p>
+        <p style="text-indent:50px;">
+          Knowledge is gained through learning facts. Someone who knows a lot about a certain subject, such as science or history, can be considered knowledgeable. Information found online or in books can help someone expand her knowledge on a topic.
+          Wisdom comes from observing experiences and learning from them in a way that affects future decisions and behavior; it is the capacity to see the truth of a matter, in spite of any illusions or distractions. For example, someone might spend beyond his means and end up in unnecessary debt, but if he is wise this will only ever happen to him once, as he will have learned from his mistake; in the future, he will save his money before he spends it carelessly. An even wiser person might avoid such a mistake altogether by listening to the wisdom of others or by wisely choosing to seek information (knowledge) on how to properly manage finances.
+          Oftentimes, wisdom is passed down in cultures in the form of common sayings, philosophical phrases, and quotes, such as aphorisms and proverbs. (One popular English proverb, for example, is "Keep your friends close, and your enemies closer.") However, whether such wisdom is absorbed, believed, and applied depends on the individual.
+        </p>
+        <p style="text-indent:50px;">
+          Knowledge is gained through learning facts. Someone who knows a lot about a certain subject, such as science or history, can be considered knowledgeable. Information found online or in books can help someone expand her knowledge on a topic.
+          Wisdom comes from observing experiences and learning from them in a way that affects future decisions and behavior; it is the capacity to see the truth of a matter, in spite of any illusions or distractions. For example, someone might spend beyond his means and end up in unnecessary debt, but if he is wise this will only ever happen to him once, as he will have learned from his mistake; in the future, he will save his money before he spends it carelessly. An even wiser person might avoid such a mistake altogether by listening to the wisdom of others or by wisely choosing to seek information (knowledge) on how to properly manage finances.
+          Oftentimes, wisdom is passed down in cultures in the form of common sayings, philosophical phrases, and quotes, such as aphorisms and proverbs. (One popular English proverb, for example, is "Keep your friends close, and your enemies closer.") However, whether such wisdom is absorbed, believed, and applied depends on the individual.
+        </p>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <script>
+        // wow = new WOW({
+        //     boxClass: 'wow', // default
+        //     animateClass: 'animated', // default
+        //     offset: 0, // default
+        //     mobile: true, // default
+        //     live: true // default
+        // })
+        // wow.init();
+        //new WOW().init();
+      </script>
+      <div class="col-xs-6 col-md-2 col-md-offset-2  bounce">
+        <div class="panel panel-body panel-default">
+          <img src="/static/Images/vinod.jpg" class="img-responsive img-circle">
+          <h5 class="text-center text-primary">VINOD PASUPULETI</h5>
+          <h6 class="text-center text-info">APSSDC</h6>
+        </div>
+      </div>
+
+      <div class="col-xs-6 col-md-2">
+        <div class="panel panel-body panel-default">
+          <img src="/static/Images/anil.jpg" class="img-responsive img-circle">
+          <h5 class="text-center text-primary">P.Anil</h5>
+          <h6 class="text-center text-info">APSSDC</h6>
+        </div>
+      </div>
+
+      <div class="col-xs-6 col-md-2">
+        <div class="panel panel-body panel-default">
+          <img src="/static/Images/vinodKing.jpg" class="img-responsive img-circle">
+          <h5 class="text-center text-primary">VINOD P</h5>
+          <h6 class="text-center text-info">APSSDC</h6>
+        </div>
+      </div>
+
+    </div>
+  </div>
+	{% endblock %}
+</div>
+{% endblock %}

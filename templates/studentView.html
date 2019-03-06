@@ -1,0 +1,122 @@
+{% extends 'issuebook.html' %}
+{% block showStudent %}
+	
+	{% if issued %}
+	<form action="{% url 'lbook:returnBook' %}" method="post">
+	{% csrf_token %}
+	<div class="table-responsive panel panel-body">
+	<table class="table table-bordered">
+		<tr class="bg-primary">
+			<th> Student Rollno</th>
+			<th>Book Id</th>
+			<th>Issued Date</th>
+			<th>Expired Date</th>
+			<th>Returned/Not</th>
+		</tr>
+
+		{% for issued in issued %}
+			{% if issued.status == 1 %}
+			<tr>
+				<td>{{issued.student}}</td>
+				<td>{{issued.book}}<input type="hidden" name="bookId" value="{{issued.book_id}}"></td>
+				<td>{{issued.issue_date}}</td>
+				<td>{{issued.expired}}</td>				
+				<td><input type="checkbox" name="issue" ></td>
+			</tr>
+			
+<!-- 			elif issued.status == 0
+				<h5 class="text-info">No Data Found..</h5> -->
+			{% endif %}
+		{% endfor %}
+		</table>
+		<td colspan="5"><input type="submit" value="ReturnBook" class="btn btn-success btn-sm"></td>
+		</div>
+		</form>
+	{% endif %}
+	{% if msg %}
+		<h3 class="text-danger">{{msg}}</h3>
+	{% elif dataMsg %}
+		<h3 class="text-danger">{{dataMsg}}</h3>
+	{% else %}
+		<div class="container-fluid ">
+			<form class="form-horizontal col-sm-6 panel panel-body panel-info" action="{% url 'lbook:issueNewBook' %}"  method="post">
+			{% csrf_token %}
+				<h3 class="text-center text-info">Issue New Book</h3>
+			  <div class="form-group">
+			    <label class="control-label col-sm-3">Roll No :</label>
+			    <div class="col-sm-9">
+			      <input type="text" class="form-control"  name="rollno" placeholder="Enter Rollno:" required="required">
+			    </div>
+			  </div>
+
+			  <div class="form-group">
+			    <label class="control-label col-sm-3">Book Id :</label>
+			    <div class="col-sm-9">
+			      <input type="text" class="form-control"  name="book_id" placeholder="Enter Book Id:" required="required">
+			    </div>
+			  </div>
+
+			  <div class="form-group">
+			    <label class="control-label col-sm-3">Issued Date :</label>
+			    <div class="col-sm-9">
+			      <input type="text" class="form-control"  id="issue" name="issue" placeholder="Enter IssueDate:" required="required">
+			      <input type="text" class="form-control" id="mailDate" name="mailDate" readonly="readonly">
+			    </div>
+			  </div>
+
+			  <div class="form-group">
+			    <label class="control-label col-sm-3">Expired Date :</label>
+			    <div class="col-sm-9">
+			      <input type="text" class="form-control"  id="expire" name="expire" placeholder="Enter ExpireDate :" readonly="readonly" required="required">
+			    </div>
+			  </div>
+
+			  <div class="form-group">
+			    <label class="control-label col-sm-3">Status :</label>
+			    <div class="col-sm-9">
+			      <input type="number" class="form-control" value="1" maxlength="1" max="1" min="0" name="status" placeholder="Enter ExpireDate :" readonly="readonly" required="required">
+			    </div>
+			  </div>
+
+			  <div class="form-group">
+			    <div class="col-sm-12">
+			      <input type="submit" class="btn btn-success btn-sm pull-right" value="IssueBook" >
+			    </div>
+			  </div>
+			  <span id="estimated_hatching_date"></span>
+			</form>
+			<script>
+			jQuery(document).ready(function(){
+				$(function() {
+				    $( "#issue" ).datepicker({
+				      changeMonth: true,
+				      changeYear: true,
+				      "dateFormat":"yy-mm-dd",
+				      onSelect: function(_date, _datepicker){
+					      var myDate = new Date(_date);
+					      var myDates = new Date(_date);
+					      myDate.setDate(myDate.getDate()+10);
+					      myDates.setDate(myDates.getDate()+15)
+					      $('#mailDate').val($.datepicker.formatDate('yy-mm-dd', myDate));
+					      $('#expire').val($.datepicker.formatDate('yy-mm-dd', myDates));
+					    }
+				    });
+				});
+				// $(function() {
+				//     $( "#expire" ).datepicker({
+				//       changeMonth: true,
+				//       changeYear: true,
+				//       "dateFormat":"yy-mm-dd",
+				//       onSelect: function(_date, _datepicker){
+				// 	      var myDate = new Date(_date);
+				// 	      myDate.setDate(myDate.getDate()+10);
+				// 	      $('#mailDate').val($.datepicker.formatDate('yy-mm-dd', myDate));
+				// 	    }				      
+				//     });
+				// });		
+			})
+
+		  </script>
+		</div>
+	{% endif %}
+{% endblock %}

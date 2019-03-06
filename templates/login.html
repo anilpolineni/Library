@@ -1,0 +1,38 @@
+{% extends 'base.html'%}
+{% block content %}
+{% load staticfiles %}
+<style>
+	body{background-image: url("/static/Images/mountains2.jpg");background-size: cover;background-attachment: fixed;}
+</style>
+
+<div class="container-fluid animated bounceIn">
+	<div class="panel panel-body col-sm-4 col-sm-offset-4" style="background-color: rgba(0,0,0,0.4);">
+		<div class="">
+			<form class="form-horizontal" action="{% url 'lbook:login' %}" method="post">
+			{% csrf_token %}
+				<div class="form-group">
+					<div class="">
+						<img src="/static/Images/profilegethightligted.1515077526.png" class="center-block img-responsive img-circle" >
+					</div>					
+				</div>							
+				<div class="input-group">
+					<span class="input-group-addon "><i class="glyphicon glyphicon-user text-info"></i></span>
+					<input  type="text" class="form-control" id="username" name="username" placeholder="Enter Username">
+				</div>
+				<br>
+				<div class="input-group">					
+					<input  type="password" class="form-control" name="password" id="password" placeholder="Enter Password">
+					<span class="input-group-addon "><i class="glyphicon glyphicon-lock text-info"></i></span>
+				</div>			
+				<br>
+				<div class="form-group">
+					<div class="col-sm-10 col-sm-offset-1">
+						<input type="submit" class="center-block btn btn-success btn-block" value="Login" >
+					</div>					
+				</div>									
+			</form>
+		</div>
+
+	</div>
+</div>
+{% endblock %}

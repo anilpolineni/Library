@@ -1,0 +1,6 @@
+{% if user.is_authenticated %}
+	{% block libSystem %}
+	{% load staticfiles %}
+		{% include "home.html" %}
+	{% endblock %}
+{% endif %}

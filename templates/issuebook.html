@@ -1,0 +1,28 @@
+{% extends 'book.html' %}
+{% block book %}
+<div>
+
+<form action="{% url 'lbook:StudentIssuedBook' %}"  method='post' class="col-sm-6 panel panel-body">
+{% csrf_token %}
+    <h3 class="text-center">Issue Book</h3>
+    <div class="row">
+        <div class="col-sm-3"><label for="student">Student Rollno</label></div>
+        <div class="col-sm-6"><input type="text" id="student" name="student" class="form-control"><br></div>
+        <div class="col-sm-3">
+          <input type="submit" value="Submit" class="btn btn-info btn-sm">
+          <a href="{% url 'lbook:viewIssueBook'%}" class="btn btn-info btn-xs" style="border-radius: 50%;"><span class="glyphicon glyphicon-eye-open"></span></a>
+        </div> 
+    </div>   
+  </form>
+  {% block showStudent %}
+
+  {% endblock%}
+  {% if Success %}
+    <h3 class="text-center text-success">{{Success}}</h3>
+  {% elif msg %}
+    <h3 class="text-center text-success">{{msg}}</h3>
+  {% elif dataMsg %}
+    <h3 class="text-center text-danger">{{dataMsg}}</h3>
+  {% endif %}
+</div>
+{% endblock %}
