@@ -1,4 +1,4 @@
-# Library Management
+# Library Management System
 
 ## By Polineni Anil 
 
@@ -10,8 +10,8 @@ admin can monitor the whole system .
 
 
 ## Required skills:
-	Python
-	HTML
-	CSS
+	Python3
+	HTML5
+	CSS (cascading stylesheets)
 ## Required Softwares:
 	Python
